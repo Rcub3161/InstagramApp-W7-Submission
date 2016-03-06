@@ -22,6 +22,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refreshAction:", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.insertSubview(refreshControl, atIndex: 0)
+
+        
         let query = PFQuery(className: "Post")
         query.orderByDescending("createdAt")
         query.includeKey("author")
@@ -40,7 +45,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Do any additional setup after loading the view.
     }
-
+    override func viewDidAppear(animated: Bool) {
+        self.tableView.reloadData()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -48,13 +55,23 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! PostsTableViewCell
         let post = Posts[indexPath.row]
+        let imagePfFile = post["media"] as? PFFile
+
         cell.captionLabel.text = post["caption"] as? String
-        cell.postedImageView.file = post["media"] as? PFFile
-        cell.usernameLabel.text = post["_p_author"] as? String
-        cell.postedImageView.loadInBackground()
+        //cell.postedImageView.file = post["media"] as? PFFile
+        cell.usernameLabel.text = post["author"] as? String
+       // cell.postedImageView.loadInBackground()
+        imagePfFile?.getDataInBackgroundWithBlock({ (image : NSData?, error : NSError?) -> Void in
+            if (error == nil) {
+                cell.postedImageView.image = UIImage(data: image!)
+            }
+        })
         
+        cell.selectionStyle = .None
+
         return cell
 
     }
@@ -67,6 +84,27 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    
+    func refreshAction(refreshControl: UIRefreshControl) {
+        
+        let query = PFQuery(className: "Post")
+        query.orderByDescending("createdAt")
+        query.includeKey("author")
+        query.limit = 20
+        
+        // fetch data asynchronously
+        query.findObjectsInBackgroundWithBlock { (posts: [PFObject]?, error: NSError?) -> Void in
+            if let posts = posts {
+                self.Posts = posts
+                self.tableView.reloadData()// do something with the data fetched
+            } else {
+                print(error?.localizedDescription)// handle error
+                refreshControl.endRefreshing()
+            }
+        }
+        refreshControl.endRefreshing()
+    }
+
 
     /*
     // MARK: - Navigation

@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import Parse
+import ParseUI
+
 
 class ProfileViewController: UIViewController {
+    
+    var selection: Bool = false
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,6 +25,12 @@ class ProfileViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func onLogout(sender: AnyObject) {
+    
+        PFUser.logOut()
+        self.performSegueWithIdentifier("onLogout", sender: nil)
     }
     
 

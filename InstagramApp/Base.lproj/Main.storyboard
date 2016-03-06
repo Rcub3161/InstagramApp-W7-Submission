@@ -17,28 +17,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XrR-Xe-I2L">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XrR-Xe-I2L">
                                 <rect key="frame" x="41" y="63" width="219" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4lA-YC-yoN">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4lA-YC-yoN">
                                 <rect key="frame" x="41" y="185" width="219" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXg-hC-opR">
-                                <rect key="frame" x="70" y="269" width="181" height="30"/>
-                                <state key="normal" title="Sign In"/>
-                                <connections>
-                                    <action selector="onSignIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nrm-Tb-gQA"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Df-wS-OPP">
-                                <rect key="frame" x="61" y="320" width="178" height="30"/>
+                                <rect key="frame" x="61" y="294" width="178" height="30"/>
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
                                     <action selector="onSignUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vx6-Ei-58k"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXg-hC-opR">
+                                <rect key="frame" x="60" y="245" width="181" height="30"/>
+                                <state key="normal" title="Sign In"/>
+                                <connections>
+                                    <action selector="onSignIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nrm-Tb-gQA"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -70,6 +70,10 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RxI-jA-x9M">
                                 <rect key="frame" x="134" y="180" width="52" height="30"/>
                                 <state key="normal" title="Log out"/>
+                                <connections>
+                                    <action selector="onLogout:" destination="5QP-Lm-T9y" eventType="touchUpInside" id="mlM-Nk-nIK"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="onLogout" id="JmX-th-ita"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -84,7 +88,7 @@
         <!--Home-->
         <scene sceneID="lXa-t4-WbH">
             <objects>
-                <viewController id="2qb-LG-NPq" customClass="HomeViewController" customModule="InstagramApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="2qb-LG-NPq" customClass="HomeViewController" customModule="InstagramApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TB6-Yc-qbg"/>
                         <viewControllerLayoutGuide type="bottom" id="Que-aY-nvT"/>
@@ -144,7 +148,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Ddd-a0-v4d">
             <objects>
-                <tabBarController id="zRs-Pu-k03" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabViewController" id="zRs-Pu-k03" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Ydk-Pz-TuY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

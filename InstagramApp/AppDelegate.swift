@@ -25,6 +25,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 configuration.server = "https://serene-shore-45484.herokuapp.com/parse"
             })
         )
+        if PFUser.currentUser() != nil {
+            print("user is not empty")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let vc = storyboard.instantiateViewControllerWithIdentifier("TabViewController")
+            window?.rootViewController = vc
+ 
+            
+        }
+        
         return true
     }
 
