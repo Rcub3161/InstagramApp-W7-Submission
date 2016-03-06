@@ -11,9 +11,10 @@ import Parse
 
 
 class LoginViewController: UIViewController {
-
+    
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
+    var validUser: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,9 +28,12 @@ class LoginViewController: UIViewController {
     
     @IBAction func onSignIn(sender: AnyObject) {
         PFUser.logInWithUsernameInBackground(usernameField.text!, password: passwordField.text!) { (user: PFUser?, error: NSError?) -> Void in
-            if user != nil {
+            if (user != nil && error?.code != 101) {
                 print("you're logged in!")
                 self.performSegueWithIdentifier("loginSegue", sender: nil)
+            } else {
+                print(error?.localizedDescription)
+                return
             }
         }
         

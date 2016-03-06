@@ -18,8 +18,8 @@ class CaptureViewController: UIViewController , UIImagePickerControllerDelegate,
         override func viewDidLoad() {
         super.viewDidLoad()
         
-        imagePicker.delegate = self
-            
+        
+        
             
         // Do any additional setup after loading the view.
     }
@@ -31,23 +31,45 @@ class CaptureViewController: UIViewController , UIImagePickerControllerDelegate,
     
 
     @IBAction func onSubmit(sender: AnyObject) {
-    
+        
+        let postImage = imageView.image!
+        
+        Post.postUserImage(postImage, withCaption: captionField.text, withCompletion: nil)
+        
+        imageView.image = nil
+        captionField.text = nil
     
     }
-
-    @IBAction func onUploadImage(sender: AnyObject) {
     
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
+    /*func resize(image: UIImage, newSize: CGSize) -> UIImage {
+        let resizeImageView = UIImageView(frame: CGRectMake(0, 0, newSize.width, newSize.height))
+        resizeImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        resizeImageView.image = image
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        UIGraphicsBeginImageContext(resizeImageView.frame.size)
+        resizeImageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }*/
+    
+    @IBAction func onUploadImage(sender: AnyObject) {
+       
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        
+        self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     @IBAction func onTakePhoto(sender: AnyObject) {
         
-        imagePicker.allowsEditing = false
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         imagePicker.sourceType = .Camera
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        self.presentViewController(imagePicker, animated: true, completion: nil)
         
     }
 
@@ -55,12 +77,11 @@ class CaptureViewController: UIViewController , UIImagePickerControllerDelegate,
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
         imageView.contentMode = .ScaleAspectFit
         imageView.image = pickedImage
+        
         }
-    }
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+
     
     /*
     // MARK: - Navigation
